@@ -13,10 +13,14 @@ Plot4 <- function() {
         scc <- codebk[good,1]
         cdat <- dat[dat$SCC %in% scc, c(4,6)]
         
+        ## Sum the total Emissions for each year, update column names, and
+        ## reduce figures by 1,000 for better graph aesthetics
         cagg <- aggregate(cdat$Emissions, by=list(cdat$year), FUN=sum)
         colnames(cagg) <- c("Year", "Emissions")
         cagg$Emissions <- as.numeric(cagg$Emissions) / 1000
         
+        ## Create plot in PNG format, notating emissions are now in
+        ## thousands of tons
         png("Plot4.png")
         p <- qplot(cagg$Year, 
               cagg$Emissions, 
